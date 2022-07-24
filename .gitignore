@@ -1,0 +1,11 @@
+# folders
+.idea/
+/bin/
+/tmp/
+
+# coverage
+*.out
+
+# miscellaneous
+*.swp
+.DS_Store

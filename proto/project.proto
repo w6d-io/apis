@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+option go_package = "github.com/w6d-io/apis/project/v1alpha1";
+
+service ProjectExternal {
+    rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {}
+
+    rpc GetProjects(ProjectsRequest) returns (ProjectsResponse) {}
+
+    rpc LinkProject(LinkProjectRequest) returns (LinkProjectResponse) {}
+
+    rpc UpdateProject(Project) returns (UpdateProjectResponse) {}
+}
+
+message GetProjectRequest {
+    int32           project_id      = 1;
+}
+
+message GetProjectResponse {
+    bool            response        = 1;
+}
+
+message LinkProjectRequest {
+    Project project = 1;
+}
+
+message LinkProjectResponse {
+    bool    response = 1;
+    Project project  = 2;
+}
+
+message UpdateProjectResponse {
+    bool    response = 1;
+    Project project  = 2;
+}
+
+message ProjectsRequest {
+    int32           page            = 1;
+    int32           per_page        = 2;
+}
+
+message ProjectsResponse {
+    repeated Project   projects     = 1;
+    int32              page         = 2;
+    int32              per_page     = 3;
+    bool               eof          = 4;
+}
+
+message Search {
+    int32               page = 1;
+    string              provider = 2;
+}
+
+message RepositoryOwner {
+    int32               id    = 1;
+    string              login = 2;
+    string              type  = 3;
+}
+
+message Project {
+    int32              id                          = 1;
+    string             name                        = 2;
+    RepositoryOwner    owner                       = 3;
+    bool               admin                       = 4;
+    bool               linked                      = 5;
+    repeated Component components                  = 6;
+    string             providerId                  = 7;
+    string             providerName                = 8;
+    string             providerType                = 9;
+    string             providerApiUrl              = 10;
+    string             providerRepoUrl             = 11;
+    int32              repositoryId                = 12;
+    bool               repositoryAdmin             = 13;
+    string             repositoryDefaultBranch     = 14;
+    string             repositoryLastActivityAt    = 15;
+    bool               repositoryPrivate           = 16;
+    string             repositoryPathWithNamespace = 17;
+    string             repositoryAvatarUrl         = 18;
+    bool               repositoryIsEmpty           = 19;
+    ProjectType        type                        = 20;
+    bool               favorite                    = 21;
+}
+
+message ProjectType {
+    int32  idBoundary = 1;  // id from scope/organisation
+    string type       = 2; // individual/scope/organisation
+}
+
+message Component {
+    string applicationType = 1;
+    string packageMgr      = 2;
+    string path            = 3;
+    string name            = 4;
+    string type            = 5;
+    string id              = 6;
+}
+
+// message Application {
+//     string                  packageMgr      = 1;
+// 	string                  applicationType = 2;
+// }
+
+// message ProjectStack {
+// 	string                  projectId       = 1;
+//     repeated Application    applications    = 2;
+// }
+
+message ProjectStackError {
+	string                  projectId   = 1;
+  string                  code        = 2;
+	string                  message     = 3;
+}
+
+message ProjectStack {
+	string             projectId  = 1;
+  repeated Component components = 2;
+}
