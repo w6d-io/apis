@@ -80,8 +80,11 @@ bin/protoc-gen-doc:
 project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-doc proto/project.proto
 	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=docs/templates/grpc-md.tmpl,project.md --doc_out=docs/apis proto/project.proto
 
+authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-doc proto/authz.proto
+	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=docs/templates/grpc-md.tmpl,authz.md --doc_out=docs/apis proto/authz.proto
+
 .PHONY: proto
-proto: project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go
+proto: project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go
 
 .PHONY: changelog
 changelog:

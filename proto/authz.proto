@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option go_package = "github.com/w6d-io/apis/authz/v1alpha1";
+
+message Provider {
+  string name          = 1;
+  string issuer_url    = 2;
+  string provider_type = 3;
+}
+
+message RoleItem {
+  int64  key   = 1;
+  string value = 2;
+}
+
+message Roles {
+  repeated RoleItem organizations      = 1;
+  repeated RoleItem scopes             = 2;
+  repeated RoleItem private_projects   = 3;
+  repeated RoleItem affiliate_projects = 4;
+}
+
+message Name {
+  string first = 1;
+  string last  = 2;
+}
+
+message Trait {
+  Name              name      = 1;
+  string            email     = 2;
+  Roles             roles     = 3;
+  repeated Provider providers = 4;
+}
