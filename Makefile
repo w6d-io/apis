@@ -62,7 +62,7 @@ vet:
 	go vet ./...
 
 .PHONY: protobuf
-protobuf: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-openapiv2 bin/protoc-gen-doc
+protobuf: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-doc #bin/protoc-gen-openapiv2
 
 bin/protoc: ## install protoc locally if necessary.
 	$(call install,$(PROTOC),"bin/protoc",$(PROTOC_ZIP))
@@ -83,8 +83,11 @@ project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go: bin/protoc b
 authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-doc proto/authz.proto
 	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=docs/templates/grpc-md.tmpl,authz.md --doc_out=docs/apis proto/authz.proto
 
+#pipeline/v1alpha1/pipeline.pb.go pipeline/v1alpha1/pipeline_grpc.pb.go: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-doc proto/pipeline.proto
+#	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=docs/templates/grpc-md.tmpl,pipeline.md --doc_out=docs/apis proto/pipeline.proto
+
 .PHONY: proto
-proto: project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go
+proto: project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go #pipeline/v1alpha1/pipeline.pb.go pipeline/v1alpha1/pipeline_grpc.pb.go
 
 .PHONY: changelog
 changelog:
