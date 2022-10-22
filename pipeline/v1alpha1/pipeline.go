@@ -68,16 +68,16 @@ type Condition struct {
 type Conditions [][]Condition
 
 type Action struct {
-    ID           string                 `json:"id"           bson:"id"           mapstructure:"id"`
-    Name         string                 `json:"name"         bson:"name"         mapstructure:"name"`
-    ComponentID  string                 `json:"componentId"  bson:"componentId"  mapstructure:"componentId"`
-    Ref          string                 `json:"ref"          bson:"ref"          mapstructure:"ref"`
-    Data         map[string]string      `json:"data"         bson:"data"         mapstructure:"data"`
-    Params       map[string]interface{} `json:"params"       bson:"params"       mapstructure:"params"`
-    Environments map[string]string      `json:"environments" bson:"environments" mapstructure:"environments"`
-    Status       string                 `json:"status"       bson:"status"       mapstructure:"status"`
-    StartTime    int64                  `json:"startTime"    bson:"startTime"    mapstructure:"startTime"`
-    EndTime      int64                  `json:"endTime"      bson:"endTime"      mapstructure:"endTime"`
+    ID           string            `json:"id"           bson:"id"           mapstructure:"id"`
+    Name         string            `json:"name"         bson:"name"         mapstructure:"name"`
+    ComponentID  string            `json:"componentId"  bson:"componentId"  mapstructure:"componentId"`
+    Ref          string            `json:"ref"          bson:"ref"          mapstructure:"ref"`
+    Data         map[string]string `json:"data"         bson:"data"         mapstructure:"data"`
+    Params       map[string]string `json:"params"       bson:"params"       mapstructure:"params"`
+    Environments map[string]string `json:"environments" bson:"environments" mapstructure:"environments"`
+    Status       string            `json:"status"       bson:"status"       mapstructure:"status"`
+    StartTime    int64             `json:"startTime"    bson:"startTime"    mapstructure:"startTime"`
+    EndTime      int64             `json:"endTime"      bson:"endTime"      mapstructure:"endTime"`
 }
 
 type Task struct {
