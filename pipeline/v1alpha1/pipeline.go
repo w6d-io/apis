@@ -15,9 +15,7 @@ Created on 15/12/2021
 
 package v1alpha1
 
-import (
-    ciops "github.com/w6d-io/ciops/api/v1alpha1"
-)
+import "fmt"
 
 type Status int
 
@@ -102,24 +100,30 @@ type Stage struct {
     StartTime int64  `json:"startTime"  bson:"startTime"  mapstructure:"startTime"`
 }
 
+type ProjectID int64
+
+func (in ProjectID) String() string {
+    return fmt.Sprintf("%d", in)
+}
+
 type Pipeline struct {
-    ID               string          `json:"id"                  bson:"id"                mapstructure:"id"`
-    Type             string          `json:"type"                bson:"type"              mapstructure:"type"`
-    PipelineIDNumber string          `json:"pipelineIdNumber"    bson:"pipelineIdNumber"  mapstructure:"pipelineIdNumber"`
-    ProjectID        ciops.ProjectID `json:"projectId"           bson:"projectId"         mapstructure:"projectId"`
-    Name             string          `json:"name"                bson:"name"              mapstructure:"name"`
-    Triggers         []Trigger       `json:"triggers"            bson:"triggers"          mapstructure:"triggers"`
-    Stages           []Stage         `json:"stages"              bson:"stages"            mapstructure:"stages"`
-    Status           string          `json:"status"              bson:"status"            mapstructure:"status"`
-    StartTime        int64           `json:"startTime"           bson:"startTime"         mapstructure:"startTime"`
-    EndTime          int64           `json:"endTime"             bson:"endTime"           mapstructure:"endTime"`
-    LogUri           string          `json:"logUri"              bson:"logUri"            mapstructure:"logUri"`
-    Complete         bool            `json:"complete"            bson:"complete"          mapstructure:"complete"`
-    Force            bool            `json:"force"               bson:"-"                 mapstructure:"-"`
-    Artifacts        bool            `json:"artifacts"           bson:"artifacts"         mapstructure:"artifacts"`
-    TriggerId        string          `json:"triggerId,omitempty" bson:"triggerId"         mapstructure:"triggerId"`
-    Commit           Commit          `json:"commit"              bson:"commit"            mapstructure:"commit"`
-    EventID          string          `json:"eventId"             bson:"eventId"           mapstructure:"eventId"`
+    ID               string    `json:"id"                  bson:"id"                mapstructure:"id"`
+    Type             string    `json:"type"                bson:"type"              mapstructure:"type"`
+    PipelineIDNumber string    `json:"pipelineIdNumber"    bson:"pipelineIdNumber"  mapstructure:"pipelineIdNumber"`
+    ProjectID        ProjectID `json:"projectId"           bson:"projectId"         mapstructure:"projectId"`
+    Name             string    `json:"name"                bson:"name"              mapstructure:"name"`
+    Triggers         []Trigger `json:"triggers"            bson:"triggers"          mapstructure:"triggers"`
+    Stages           []Stage   `json:"stages"              bson:"stages"            mapstructure:"stages"`
+    Status           string    `json:"status"              bson:"status"            mapstructure:"status"`
+    StartTime        int64     `json:"startTime"           bson:"startTime"         mapstructure:"startTime"`
+    EndTime          int64     `json:"endTime"             bson:"endTime"           mapstructure:"endTime"`
+    LogUri           string    `json:"logUri"              bson:"logUri"            mapstructure:"logUri"`
+    Complete         bool      `json:"complete"            bson:"complete"          mapstructure:"complete"`
+    Force            bool      `json:"force"               bson:"-"                 mapstructure:"-"`
+    Artifacts        bool      `json:"artifacts"           bson:"artifacts"         mapstructure:"artifacts"`
+    TriggerId        string    `json:"triggerId,omitempty" bson:"triggerId"         mapstructure:"triggerId"`
+    Commit           Commit    `json:"commit"              bson:"commit"            mapstructure:"commit"`
+    EventID          string    `json:"eventId"             bson:"eventId"           mapstructure:"eventId"`
 }
 
 type Commit struct {
