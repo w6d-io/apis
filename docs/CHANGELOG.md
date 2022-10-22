@@ -1,12 +1,12 @@
 
-<a name="v0.2.0"></a>
-## [v0.2.0](https://github.com/w6d-io/x/compare/v0.1.0...v0.2.0) (2022-07-25)
+<a name="v0.1.1"></a>
+## v0.1.1 (2022-10-22)
+
+### Chore
+
+* clean pipeline structure [a639a3a]("https://github.com/w6d-io/x/commit/a639a3a6f79c05c6282090e0caf0b84673b7d91e")
 
 ### Features
 
-* add authz [87d7dae]("https://github.com/w6d-io/x/commit/87d7dae6f2959af6b900c99fbf8bd174a0301137")
-
-
-<a name="v0.1.0"></a>
-## v0.1.0 (2022-07-25)
+* add authz [106f1c2]("https://github.com/w6d-io/x/commit/106f1c2ca69e849f476d817ff4277dc6974cd1ae")
 
