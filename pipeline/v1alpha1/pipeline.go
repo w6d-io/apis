@@ -15,7 +15,9 @@ Created on 15/12/2021
 
 package v1alpha1
 
-import "fmt"
+import (
+    "fmt"
+)
 
 type Status int
 
@@ -42,6 +44,8 @@ func (s Status) ToString() string {
 
 type Data map[string]string
 
+//+kubebuilder:object:generate=true
+
 type Trigger struct {
     ID          string `json:"id"          bson:"id"          mapstructure:"id"`
     Ref         string `json:"ref"         bson:"ref"         mapstructure:"ref"`
@@ -67,6 +71,8 @@ type Condition struct {
 
 type Conditions [][]Condition
 
+//+kubebuilder:object:generate=true
+
 type Action struct {
     ID           string            `json:"id"           bson:"id"           mapstructure:"id"`
     Name         string            `json:"name"         bson:"name"         mapstructure:"name"`
@@ -80,6 +86,8 @@ type Action struct {
     EndTime      int64             `json:"endTime"      bson:"endTime"      mapstructure:"endTime"`
 }
 
+//+kubebuilder:object:generate=true
+
 type Task struct {
     ID            string     `json:"id"            bson:"id"            mapstructure:"id"`
     Name          string     `json:"name"          bson:"name"          mapstructure:"name"`
@@ -90,6 +98,8 @@ type Task struct {
     EndTime       int64      `json:"endTime"       bson:"endTime"       mapstructure:"endTime"`
     Status        string     `json:"status"        bson:"status"        mapstructure:"status"`
 }
+
+//+kubebuilder:object:generate=true
 
 type Stage struct {
     ID        string `json:"id"         bson:"id"         mapstructure:"id"`
@@ -106,6 +116,9 @@ func (in ProjectID) String() string {
     return fmt.Sprintf("%d", in)
 }
 
+//+kubebuilder:object:generate=true
+
+// Pipeline defines the desired state of Pipeline
 type Pipeline struct {
     ID               string    `json:"id"                  bson:"id"                mapstructure:"id"`
     Type             string    `json:"type"                bson:"type"              mapstructure:"type"`

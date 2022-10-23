@@ -20,7 +20,6 @@ else
 GOARCH     = $(shell go env GOARCH)
 endif
 
-PROTOC = $(shell pwd)/bin/protoc
 ifeq (darwin,$(GOOS))
 PROTOC_ZIP=https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protoc-3.7.1-osx-x86_64.zip
 else
@@ -29,7 +28,7 @@ endif
 
 export PATH := $(shell pwd)/bin:${PATH}
 
-all: proto
+all: proto generate
 
 ##@ General
 
@@ -53,6 +52,10 @@ rm -rf $$TMP_DIR ;\
 }
 endef
 
+.PHONY: generate
+generate: controller-gen ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
+	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="./..."
+
 .PHONY: fmt
 fmt:
 	go fmt ./...
@@ -62,36 +65,75 @@ vet:
 	go vet ./...
 
 .PHONY: protobuf
-protobuf: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-doc #bin/protoc-gen-openapiv2
+protobuf: protoc protoc-gen-go protoc-gen-go-grpc protoc-gen-doc #bin/protoc-gen-openapiv2
 
-bin/protoc: ## install protoc locally if necessary.
-	$(call install,$(PROTOC),"bin/protoc",$(PROTOC_ZIP))
+##@ Build Dependencies
 
+## Location to install dependencies to
+LOCALBIN ?= $(shell pwd)/bin
+$(LOCALBIN):
+	mkdir -p $(LOCALBIN)
 
-bin/protoc-gen-go:
-	$(call go-get-tool,bin/protoc-gen-go,google.golang.org/protobuf/cmd/protoc-gen-go)
+## Tool Binaries
+PROTOC             ?= $(LOCALBIN)/protoc
+PROTOC_GEN_GO      ?= $(LOCALBIN)/protoc-gen-go
+PROTOC_GEN_GO_GRPC ?= $(LOCALBIN)/protoc-gen-go-grpc
+PROTOC_GEN_DOC     ?= $(LOCALBIN)/protoc-gen-doc
+CONTROLLER_GEN     ?= $(LOCALBIN)/controller-gen
+GITCHGLOG          ?= $(LOCALBIN)/git-chglog
 
-bin/protoc-gen-go-grpc:
-	$(call go-get-tool,bin/protoc-gen-go-grpc,google.golang.org/grpc/cmd/protoc-gen-go-grpc)
+## Tool Versions
+CONTROLLER_TOOLS_VERSION ?= v0.9.2
 
-bin/protoc-gen-doc:
-	$(call go-get-tool,bin/protoc-gen-doc,github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc)
+.PHONY: protoc
+protoc: $(PROTOC)
+$(PROTOC): $(LOCALBIN) ## install protoc locally if necessary.
+	test -s $(LOCALBIN)/protoc || $(call install,$(PROTOC),$(PROTOC),$(PROTOC_ZIP))
 
-project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-doc proto/project.proto
+.PHONY: protoc-gen-go
+protoc-gen-go: $(PROTOC_GEN_GO)
+$(PROTOC_GEN_GO): $(LOCALBIN)
+	$(call go-get-tool,$(PROTOC_GEN_GO),google.golang.org/protobuf/cmd/protoc-gen-go)
+
+.PHONY: protoc-gen-go-grpc
+protoc-gen-go-grpc: $(PROTOC_GEN_GO_GRPC)
+$(PROTOC_GEN_GO_GRPC): $(LOCALBIN)
+	$(call go-get-tool,$(PROTOC_GEN_GO_GRPC),google.golang.org/grpc/cmd/protoc-gen-go-grpc)
+
+.PHONY: protoc-gen-doc
+protoc-gen-doc: $(PROTOC_GEN_DOC)
+$(PROTOC_GEN_DOC): $(LOCALBIN)
+	$(call go-get-tool,$(PROTOC_GEN_DOC),github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc)
+
+.PHONY: controller-gen
+controller-gen: $(CONTROLLER_GEN) ## Download controller-gen locally if necessary.
+$(CONTROLLER_GEN): $(LOCALBIN)
+	test -s $(LOCALBIN)/controller-gen || GOBIN=$(LOCALBIN) go install sigs.k8s.io/controller-tools/cmd/controller-gen@$(CONTROLLER_TOOLS_VERSION)
+
+.PHONY: chglog
+chglog: $(GITCHGLOG) ## Download git-chglog locally if necessary
+$(GITCHGLOG): $(LOCALBIN)
+	test -s $(LOCALBIN)/git-chglog || GOBIN=$(LOCALBIN) go install github.com/git-chglog/git-chglog/cmd/git-chglog@latest
+
+## genarate proto file
+
+project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go: bin/protoc protoc-gen-go protoc-gen-go-grpc protoc-gen-doc proto/project.proto
 	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=docs/templates/grpc-md.tmpl,project.md --doc_out=docs/apis proto/project.proto
 
-authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-doc proto/authz.proto
+authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go: bin/protoc protoc-gen-go protoc-gen-go-grpc protoc-gen-doc proto/authz.proto
 	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=docs/templates/grpc-md.tmpl,authz.md --doc_out=docs/apis proto/authz.proto
 
-#pipeline/v1alpha1/pipeline.pb.go pipeline/v1alpha1/pipeline_grpc.pb.go: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-doc proto/pipeline.proto
-#	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=docs/templates/grpc-md.tmpl,pipeline.md --doc_out=docs/apis proto/pipeline.proto
+# Changelog
+.PHONY: changelog
+changelog: chglog
+	$(GITCHGLOG) -o docs/CHANGELOG.md --next-tag $(NEXT_TAG)
+
+##@ Build
 
 .PHONY: proto
 proto: project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go #pipeline/v1alpha1/pipeline.pb.go pipeline/v1alpha1/pipeline_grpc.pb.go
 
-.PHONY: changelog
-changelog:
-	git-chglog -o docs/CHANGELOG.md --next-tag $(NEXT_TAG)
+##@ Script
 
 define install
 @[ -f $(1) ] || { \
