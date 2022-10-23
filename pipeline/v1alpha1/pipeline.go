@@ -13,6 +13,8 @@ distributed under the License is prohibited.
 Created on 15/12/2021
 */
 
+// Package v1alpha1 contains API Schema definitions for the pipeline v1alpha1 API group
+// +kubebuilder:object:generate=true
 package v1alpha1
 
 import (
@@ -44,8 +46,6 @@ func (s Status) ToString() string {
 
 type Data map[string]string
 
-//+kubebuilder:object:generate=true
-
 type Trigger struct {
     ID          string `json:"id"          bson:"id"          mapstructure:"id"`
     Ref         string `json:"ref"         bson:"ref"         mapstructure:"ref"`
@@ -71,8 +71,6 @@ type Condition struct {
 
 type Conditions [][]Condition
 
-//+kubebuilder:object:generate=true
-
 type Action struct {
     ID           string            `json:"id"           bson:"id"           mapstructure:"id"`
     Name         string            `json:"name"         bson:"name"         mapstructure:"name"`
@@ -86,8 +84,6 @@ type Action struct {
     EndTime      int64             `json:"endTime"      bson:"endTime"      mapstructure:"endTime"`
 }
 
-//+kubebuilder:object:generate=true
-
 type Task struct {
     ID            string     `json:"id"            bson:"id"            mapstructure:"id"`
     Name          string     `json:"name"          bson:"name"          mapstructure:"name"`
@@ -98,8 +94,6 @@ type Task struct {
     EndTime       int64      `json:"endTime"       bson:"endTime"       mapstructure:"endTime"`
     Status        string     `json:"status"        bson:"status"        mapstructure:"status"`
 }
-
-//+kubebuilder:object:generate=true
 
 type Stage struct {
     ID        string `json:"id"         bson:"id"         mapstructure:"id"`
@@ -115,8 +109,6 @@ type ProjectID int64
 func (in ProjectID) String() string {
     return fmt.Sprintf("%d", in)
 }
-
-//+kubebuilder:object:generate=true
 
 // Pipeline defines the desired state of Pipeline
 type Pipeline struct {
