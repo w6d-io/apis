@@ -1,10 +1,18 @@
 
+<a name="v0.2.1"></a>
+## [v0.2.1](https://github.com/w6d-io/x/compare/v0.2.0...v0.2.1) (2022-10-23)
+
+### Chore
+
+* set correct header and set comment controller-gen generaly [73aa0e4]("https://github.com/w6d-io/x/commit/73aa0e4419413535e4c5de79c58a554ebf276b35")
+
+
 <a name="v0.2.0"></a>
 ## [v0.2.0](https://github.com/w6d-io/x/compare/v0.1.2...v0.2.0) (2022-10-23)
 
 ### Features
 
-* set comment for controller-gen [886405e]("https://github.com/w6d-io/x/commit/886405e84f41e93194c63d23fafb562ea2671f90")
+* set comment for controller-gen [297fc74]("https://github.com/w6d-io/x/commit/297fc7419b3a9130ef73718a2cd72e18e72cedfd")
 
 
 <a name="v0.1.2"></a>
