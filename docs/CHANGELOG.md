@@ -1,10 +1,18 @@
 
+<a name="v0.2.0"></a>
+## [v0.2.0](https://github.com/w6d-io/x/compare/v0.1.2...v0.2.0) (2022-10-23)
+
+### Features
+
+* set comment for controller-gen [886405e]("https://github.com/w6d-io/x/commit/886405e84f41e93194c63d23fafb562ea2671f90")
+
+
 <a name="v0.1.2"></a>
 ## [v0.1.2](https://github.com/w6d-io/x/compare/v0.1.1...v0.1.2) (2022-10-22)
 
 ### Chore
 
-* update param action type [c8e7be6]("https://github.com/w6d-io/x/commit/c8e7be6eabd3495ce57d977e1df17ebc617473b8")
+* update param action type [ca90bff]("https://github.com/w6d-io/x/commit/ca90bffca6961c74417eca8760aff6f96b303517")
 
 
 <a name="v0.1.1"></a>
