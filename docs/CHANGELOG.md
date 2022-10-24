@@ -1,4 +1,12 @@
 
+<a name="v0.2.3"></a>
+## [v0.2.3](https://github.com/w6d-io/apis/compare/v0.2.2...v0.2.3) (2022-10-24)
+
+### Performance Improvements
+
+* [cac0d4a](https://github.com/w6d-io/apis/commit/cac0d4aebede9423a1ada557daac2c32632a327a) protobuf compilation and documentation
+
+
 <a name="v0.2.2"></a>
 ## [v0.2.2](https://github.com/w6d-io/apis/compare/v0.2.1...v0.2.2) (2022-10-24)
 

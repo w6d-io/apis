@@ -96,8 +96,8 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| name | [Name](#Name) |  |  |
 | email | [string](#string) |  |  |
+| name | [Name](#Name) |  |  |
 | roles | [Roles](#Roles) |  |  |
 | providers | [Provider](#Provider) | repeated |  |
 

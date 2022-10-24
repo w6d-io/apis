@@ -88,7 +88,7 @@ CONTROLLER_TOOLS_VERSION ?= v0.9.2
 .PHONY: protoc
 protoc: $(PROTOC)
 $(PROTOC): $(LOCALBIN) ## install protoc locally if necessary.
-	test -s $(LOCALBIN)/protoc || $(call install,$(PROTOC),$(PROTOC),$(PROTOC_ZIP))
+	@test -s $(LOCALBIN)/protoc || $(call install,$(PROTOC),$(PROTOC),$(PROTOC_ZIP))
 
 .PHONY: protoc-gen-go
 protoc-gen-go: $(PROTOC_GEN_GO)
@@ -116,12 +116,15 @@ $(GITCHGLOG): $(LOCALBIN)
 	test -s $(LOCALBIN)/git-chglog || GOBIN=$(LOCALBIN) go install github.com/git-chglog/git-chglog/cmd/git-chglog@latest
 
 ## genarate proto file
+.PHONY: project
+project: protobuf project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go
+project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go: proto/project.proto
+	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=.config/templates/grpc-md.tmpl,project.md --doc_out=docs/apis proto/project.proto
 
-project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go: bin/protoc protoc-gen-go protoc-gen-go-grpc protoc-gen-doc proto/project.proto
-	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=docs/templates/grpc-md.tmpl,project.md --doc_out=docs/apis proto/project.proto
-
-authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go: bin/protoc protoc-gen-go protoc-gen-go-grpc protoc-gen-doc proto/authz.proto
-	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=docs/templates/grpc-md.tmpl,authz.md --doc_out=docs/apis proto/authz.proto
+.PHONY: authz
+authz: protobuf authz/v1alpha1/authz.pb.go #authz/v1alpha1/authz_grpc.pb.go
+authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go: proto/authz.proto
+	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=.config/templates/grpc-md.tmpl,authz.md --doc_out=docs/apis proto/authz.proto
 
 # Changelog
 .PHONY: changelog
@@ -131,7 +134,7 @@ changelog: chglog
 ##@ Build
 
 .PHONY: proto
-proto: project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go #pipeline/v1alpha1/pipeline.pb.go pipeline/v1alpha1/pipeline_grpc.pb.go
+proto: project authz
 
 ##@ Script
 
