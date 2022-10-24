@@ -4,11 +4,8 @@ option go_package = "github.com/w6d-io/apis/project/v1alpha1";
 
 service ProjectExternal {
     rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {}
-
     rpc GetProjects(ProjectsRequest) returns (ProjectsResponse) {}
-
     rpc LinkProject(LinkProjectRequest) returns (LinkProjectResponse) {}
-
     rpc UpdateProject(Project) returns (UpdateProjectResponse) {}
 }
 

@@ -26,8 +26,8 @@ message Name {
 }
 
 message Trait {
-  Name              name      = 1;
-  string            email     = 2;
+  string            email     = 1;
+  Name              name      = 2;
   Roles             roles     = 3;
   repeated Provider providers = 4;
 }
