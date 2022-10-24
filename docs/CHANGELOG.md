@@ -1,10 +1,18 @@
 
+<a name="v0.2.2"></a>
+## [v0.2.2](https://github.com/w6d-io/x/compare/v0.2.1...v0.2.2) (2022-10-24)
+
+### Features
+
+* add pipeline helper [bf7fad0]("https://github.com/w6d-io/x/commit/bf7fad04ab543832b7a96c92fc34a58bd3bddd35")
+
+
 <a name="v0.2.1"></a>
 ## [v0.2.1](https://github.com/w6d-io/x/compare/v0.2.0...v0.2.1) (2022-10-23)
 
 ### Chore
 
-* set correct header and set comment controller-gen generaly [73aa0e4]("https://github.com/w6d-io/x/commit/73aa0e4419413535e4c5de79c58a554ebf276b35")
+* set correct header and set comment controller-gen generaly [2728b97]("https://github.com/w6d-io/x/commit/2728b978b7f69a9f1ff3028d77f1843e6bffd434")
 
 
 <a name="v0.2.0"></a>
