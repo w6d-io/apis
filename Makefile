@@ -64,6 +64,11 @@ fmt:
 vet:
 	go vet ./...
 
+.PHONY: test
+test: fmt vet
+	go test $(GOTAGS) -v -coverpkg=./... -coverprofile=cover.out ./...
+	@go tool cover -func cover.out | grep total
+
 .PHONY: protobuf
 protobuf: protoc protoc-gen-go protoc-gen-go-grpc protoc-gen-doc #bin/protoc-gen-openapiv2
 
