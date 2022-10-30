@@ -93,7 +93,7 @@ CONTROLLER_TOOLS_VERSION ?= v0.9.2
 .PHONY: protoc
 protoc: $(PROTOC)
 $(PROTOC): $(LOCALBIN) ## install protoc locally if necessary.
-	@test -s $(LOCALBIN)/protoc || $(call install,$(PROTOC),$(PROTOC),$(PROTOC_ZIP))
+	@test -s $(LOCALBIN)/protoc || $(call install,$(PROTOC),bin/protoc,$(PROTOC_ZIP))
 
 .PHONY: protoc-gen-go
 protoc-gen-go: $(PROTOC_GEN_GO)
@@ -144,7 +144,7 @@ proto: project authz
 ##@ Script
 
 define install
-@[ -f $(1) ] || { \
+[ -f $(1) ] || { \
 set -e;\
 TMP_DIR=$$(mktemp -d);\
 cd $$TMP_DIR ;\
