@@ -127,9 +127,14 @@ project/v1alpha1/project.pb.go project/v1alpha1/project_grpc.pb.go: proto/projec
 	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=.config/templates/grpc-md.tmpl,project.md --doc_out=docs/apis proto/project.proto
 
 .PHONY: authz
-authz: protobuf authz/v1alpha1/authz.pb.go #authz/v1alpha1/authz_grpc.pb.go
-authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go: proto/authz.proto
+authz: protobuf authz/v1alpha1/authz.pb.go
+authz/v1alpha1/authz.pb.go: proto/authz.proto
 	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=.config/templates/grpc-md.tmpl,authz.md --doc_out=docs/apis proto/authz.proto
+
+.PHONY: pipeline
+pipeline: protobuf pipeline/v1alpha1/pipeline.pb.go
+pipeline/v1alpha1/pipeline.pb.go: proto/pipeline.proto
+	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=.config/templates/grpc-md.tmpl,pipeline.md --doc_out=docs/apis proto/pipeline.proto
 
 # Changelog
 .PHONY: changelog

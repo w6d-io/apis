@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+option go_package = "github.com/w6d-io/apis/pipeline/v1alpha1";
+
+message Pipeline {
+  string id                 = 1;
+  string type               = 2;
+  string pipeline_id_number = 3;
+  int64  project_id         = 4;
+  string name               = 5;
+  string status             = 6;
+  int64  startTime          = 7;
+  int64  end_time           = 8;
+  string log_uri            = 9;
+  bool   complete           = 10;
+  bool   force              = 11;
+  bool   artifacts          = 12;
+  string trigger_id         = 13;
+  Commit commit             = 14;
+  string event_id           = 15;
+  repeated Trigger triggers = 16;
+  repeated Stage stages     = 17;
+}
+
+message Trigger {
+  string id = 1;
+  string ref = 2;
+  string type = 3;
+  string componentId = 4;
+  map<string,string> data = 5;
+}
+
+
+message Actions {
+  string id = 1;
+  string name = 2;
+  string componentId = 3;
+  string ref = 4;
+  map<string,string> data = 5;
+  map<string,string> params = 6;
+  map<string,string> environments = 7;
+  int64 startTime = 8;
+  int64 endTime = 9;
+  string status = 10;
+}
+
+message Operator {
+
+}
+
+message WhenExpression {
+  string   input         = 1;
+  repeated string values =3;
+}
+
+message Conditions {
+  message Condition {
+    string id = 1;
+    string ref = 2;
+    string type = 3;
+    string when = 4;
+  }
+  repeated Condition condition = 1;
+}
+
+message Tasks {
+  string id = 1;
+  string name = 2;
+  bool skipOnFailure = 3;
+  repeated Conditions conditions = 4;
+  repeated Actions actions = 5;
+  int64 startTime = 6;
+  int64 endTime = 7;
+  string status = 8;
+}
+
+message Stage {
+  string id = 1;
+  string name = 2;
+  repeated Tasks tasks = 3;
+  string status = 4;
+  int64 endTime = 5;
+  int64 startTime = 6;
+}
+
+message Commit {
+  string id = 1;
+  string ref = 2;
+  string message = 3;
+}
