@@ -1,10 +1,18 @@
 
+<a name="v0.3.0"></a>
+## [v0.3.0](https://github.com/w6d-io/apis/compare/v0.2.3...v0.3.0) (2022-11-14)
+
+### Features
+
+* [c6cd54c](https://github.com/w6d-io/apis/commit/c6cd54c01840098a29c866edbd94056b5e6d19d9) adding notification api
+
+
 <a name="v0.2.3"></a>
 ## [v0.2.3](https://github.com/w6d-io/apis/compare/v0.2.2...v0.2.3) (2022-10-24)
 
 ### Performance Improvements
 
-* [cac0d4a](https://github.com/w6d-io/apis/commit/cac0d4aebede9423a1ada557daac2c32632a327a) protobuf compilation and documentation
+* [13dd9d6](https://github.com/w6d-io/apis/commit/13dd9d62d8a08e3d9bf959f8cd43fc4a50d2e639) protobuf compilation and documentation
 
 
 <a name="v0.2.2"></a>
