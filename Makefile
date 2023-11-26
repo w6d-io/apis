@@ -126,6 +126,11 @@ authz: protobuf authz/v1alpha1/authz.pb.go #authz/v1alpha1/authz_grpc.pb.go
 authz/v1alpha1/authz.pb.go authz/v1alpha1/authz_grpc.pb.go: proto/authz.proto
 	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=.config/templates/grpc-md.tmpl,authz.md --doc_out=docs/apis proto/authz.proto
 
+.PHONY: iam
+iam: protobuf iam/v1alpha1/iam.pb.go iam/v1alpha1/iam_grpc.pb.go
+iam/v1alpha1/iam.pb.go iam/v1alpha1/iam_grpc.pb.go: proto/iam.proto
+	$(PROTOC) -Iproto --go_out=. --go_opt=module=github.com/w6d-io/apis --go-grpc_opt=module=github.com/w6d-io/apis --go-grpc_out=. --doc_opt=.config/templates/grpc-md.tmpl,iam.md --doc_out=docs/apis proto/iam.proto
+
 # Changelog
 .PHONY: changelog
 changelog: chglog
@@ -134,7 +139,7 @@ changelog: chglog
 ##@ Build
 
 .PHONY: proto
-proto: project authz
+proto: project authz iam
 
 ##@ Script
 
