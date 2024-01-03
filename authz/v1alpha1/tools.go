@@ -18,6 +18,8 @@ package v1alpha1
 
 import "encoding/json"
 
+type RoleItems []*RoleItem
+
 func (x *Trait) ToMap() (map[string]interface{}, error) {
 	var m map[string]interface{}
 
@@ -29,15 +31,14 @@ func (x *Trait) ToMap() (map[string]interface{}, error) {
 	return m, err
 }
 
-// SetRole adds the new role or update the value if the key role already exist
-func SetRole(roles []*RoleItem, key int64, value string) []*RoleItem {
-	m := make(map[int64]string, len(roles)+1)
+// Add adds the new role or update the value if the key role already exist
+func (in *RoleItems) Add(key int64, value string) {
+	m := make(map[int64]string, len(*in)+1)
 
-	for _, v := range roles {
+	for _, v := range *in {
 		m[v.Key] = v.Value
 	}
 	m[key] = value
-
 	var ri []*RoleItem
 	for k, v := range m {
 		ri = append(ri, &RoleItem{
@@ -45,16 +46,16 @@ func SetRole(roles []*RoleItem, key int64, value string) []*RoleItem {
 			Value: v,
 		})
 	}
-	return ri
+	*in = ri
 }
 
-// DelRole adds the new role or update the value if the key role already exist
-func DelRole(roles []*RoleItem, key int64) []*RoleItem {
+// Delete adds the new role or update the value if the key role already exist
+func (in *RoleItems) Delete(key int64) {
 	var ri []*RoleItem
-	for _, v := range roles {
+	for _, v := range in {
 		if v.Key != key {
 			ri = append(ri, v)
 		}
 	}
-	return ri
+	*in = ri
 }

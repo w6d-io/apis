@@ -56,3 +56,26 @@ func (in *Pipeline) ConditionValidation() error {
 	}
 	return nil
 }
+
+// Also collects errors, returns a new collection of existing errors and new errors.
+func (in *FieldError) Also(errs ...*FieldError) *FieldError {
+	if l := len(errs); l == 0 || l == 1 && len(errs[0].Fields) == 0 {
+		return in
+	}
+
+	var newErr *FieldError
+	if len(in.Fields) > 0 {
+		newErr = in.DeepCopy()
+	} else {
+		newErr = &FieldError{Fields: []Field{}}
+	}
+	for _, e := range errs {
+		if len(e.Fields) > 0 {
+			newErr.Fields = append(newErr.Fields, e.Fields...)
+		}
+	}
+	if len(newErr.Fields) == 0 {
+		return nil
+	}
+	return newErr
+}
