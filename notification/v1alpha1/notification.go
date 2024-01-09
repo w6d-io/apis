@@ -18,10 +18,10 @@ Created on 14/11/2022
 package v1alpha1
 
 type Notification struct {
-    Id      string   `json:"id"`
-    Type    string   `json:"type"`
-    Kind    string   `json:"kind"`
-    Scope   []string `json:"scope"`
-    Message string   `json:"message"`
-    Time    int64    `json:"time"`
+	Id      string   `json:"id"`
+	Type    string   `json:"type"`
+	Kind    string   `json:"kind"`
+	Scope   []string `json:"scope"`
+	Message string   `json:"message"`
+	Time    int64    `json:"time"`
 }
