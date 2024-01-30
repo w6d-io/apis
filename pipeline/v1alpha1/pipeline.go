@@ -47,11 +47,16 @@ func (s Status) ToString() string {
 type Data map[string]string
 
 type Trigger struct {
-	ID          string `json:"id"          bson:"id"          mapstructure:"id"`
-	Ref         string `json:"ref"         bson:"ref"         mapstructure:"ref"`
-	Type        string `json:"type"        bson:"type"        mapstructure:"type"`
+	// ID trigger identifier
+	ID string `json:"id"          bson:"id"          mapstructure:"id"`
+	// Ref trigger reference
+	Ref string `json:"ref"         bson:"ref"         mapstructure:"ref"`
+	// Type trigger type
+	Type string `json:"type"        bson:"type"        mapstructure:"type"`
+	// ComponentId the component id that the trigger is bound with
 	ComponentId string `json:"componentId" bson:"componentId" mapstructure:"componentId"`
-	Data        Data   `json:"data"        bson:"data"        mapstructure:"data"`
+	// Data the key/value for this trigger
+	Data Data `json:"data"        bson:"data"        mapstructure:"data"`
 }
 
 type ConditionType string
@@ -63,45 +68,90 @@ const (
 )
 
 type Condition struct {
-	Id   string        `json:"id" bson:"id"`
-	Ref  string        `json:"ref" bson:"ref"`
+	// Id condition identifier
+	// +optional
+	Id string `json:"id" bson:"id"`
+	// Ref condition reference
+	// +optional
+	Ref string `json:"ref" bson:"ref"`
+	// Type condition type
+	// +optional
 	Type ConditionType `json:"type" bson:"type"`
-	When string        `json:"when" bson:"when"`
+	// When is the operand when the trigger is true
+	// +optional
+	When string `json:"when" bson:"when"`
 }
 
 type Conditions [][]Condition
 
 type Action struct {
-	ID           string            `json:"id"           bson:"id"           mapstructure:"id"`
-	Name         string            `json:"name"         bson:"name"         mapstructure:"name"`
-	ComponentID  string            `json:"componentId"  bson:"componentId"  mapstructure:"componentId"`
-	Ref          string            `json:"ref"          bson:"ref"          mapstructure:"ref"`
-	Data         map[string]string `json:"data"         bson:"data"         mapstructure:"data"`
-	Params       map[string]string `json:"params"       bson:"params"       mapstructure:"params"`
+	// ID the identifier of the action
+	ID string `json:"id"           bson:"id"           mapstructure:"id"`
+	// Name contains the action aname
+	Name string `json:"name"         bson:"name"         mapstructure:"name"`
+	// ComponentID the component id this action is linked with
+	ComponentID string `json:"componentId"  bson:"componentId"  mapstructure:"componentId"`
+	// Ref the action reference
+	Ref string `json:"ref"          bson:"ref"          mapstructure:"ref"`
+	// Data key/value
+	// +optional
+	Data map[string]string `json:"data"         bson:"data"         mapstructure:"data"`
+	// Params key/value
+	// +optional
+	Params map[string]string `json:"params"       bson:"params"       mapstructure:"params"`
+	// Environments key/value
+	// +optional
 	Environments map[string]string `json:"environments" bson:"environments" mapstructure:"environments"`
-	Status       string            `json:"status"       bson:"status"       mapstructure:"status"`
-	StartTime    int64             `json:"startTime"    bson:"startTime"    mapstructure:"startTime"`
-	EndTime      int64             `json:"endTime"      bson:"endTime"      mapstructure:"endTime"`
+	// Status of the action during the execution
+	// +optional
+	Status string `json:"status"       bson:"status"       mapstructure:"status"`
+	// StartTime date when the action has started during the execution
+	// +optional
+	StartTime int64 `json:"startTime"    bson:"startTime"    mapstructure:"startTime"`
+	// EndTime date when the action has ended during the execution
+	// +optional
+	EndTime int64 `json:"endTime"      bson:"endTime"      mapstructure:"endTime"`
 }
 
 type Task struct {
-	ID            string     `json:"id"            bson:"id"            mapstructure:"id"`
-	Name          string     `json:"name"          bson:"name"          mapstructure:"name"`
-	SkipOnFailure bool       `json:"skipOnFailure" bson:"skipOnFailure" mapstructure:"skipOnFailure"`
-	Conditions    Conditions `json:"conditions"    bson:"conditions"    mapstructure:"conditions"`
-	Actions       []Action   `json:"actions"       bson:"actions"       mapstructure:"actions"`
-	StartTime     int64      `json:"startTime"     bson:"startTime"     mapstructure:"startTime"`
-	EndTime       int64      `json:"endTime"       bson:"endTime"       mapstructure:"endTime"`
-	Status        string     `json:"status"        bson:"status"        mapstructure:"status"`
+	// ID task identifier
+	ID string `json:"id"            bson:"id"            mapstructure:"id"`
+	// Name task name
+	Name string `json:"name"          bson:"name"          mapstructure:"name"`
+	// SkipOnFailure whether to stop the pipeline on raising error
+	SkipOnFailure bool `json:"skipOnFailure" bson:"skipOnFailure" mapstructure:"skipOnFailure"`
+	// Conditions determines if this task need to be run
+	// +optional
+	Conditions Conditions `json:"conditions"    bson:"conditions"    mapstructure:"conditions"`
+	// Actions list of action of this task
+	Actions []Action `json:"actions"       bson:"actions"       mapstructure:"actions"`
+	// StartTime timestamp when this task has started during the execution
+	// +optional
+	StartTime int64 `json:"startTime"     bson:"startTime"     mapstructure:"startTime"`
+	// EndTime timestamp when this task has ended during the execution
+	// +optional
+	EndTime int64 `json:"endTime"       bson:"endTime"       mapstructure:"endTime"`
+	// Status of this action during the execution
+	// +optional
+	Status string `json:"status"        bson:"status"        mapstructure:"status"`
 }
 
 type Stage struct {
-	ID        string `json:"id"         bson:"id"         mapstructure:"id"`
-	Name      string `json:"name"       bson:"name"       mapstructure:"name"`
-	Tasks     []Task `json:"tasks"      bson:"tasks"      mapstructure:"tasks"`
-	Status    string `json:"status"     bson:"status"     mapstructure:"status"`
-	EndTime   int64  `json:"endTime"    bson:"endTime"    mapstructure:"endTime"`
-	StartTime int64  `json:"startTime"  bson:"startTime"  mapstructure:"startTime"`
+	// ID the stage identifier
+	ID string `json:"id"         bson:"id"         mapstructure:"id"`
+	// Name
+	Name string `json:"name"       bson:"name"       mapstructure:"name"`
+	// Tasks
+	Tasks []Task `json:"tasks"      bson:"tasks"      mapstructure:"tasks"`
+	// Status of this stage during the execution
+	// +optional
+	Status string `json:"status"     bson:"status"     mapstructure:"status"`
+	// StartTime timestamp when this stage has started during the execution
+	// +optional
+	StartTime int64 `json:"startTime"  bson:"startTime"  mapstructure:"startTime"`
+	// EndTime timestamp when this stage has ended during the execution
+	// +optional
+	EndTime int64 `json:"endTime"    bson:"endTime"    mapstructure:"endTime"`
 }
 
 type ProjectID int64
@@ -112,43 +162,84 @@ func (in ProjectID) String() string {
 
 // Pipeline defines the desired state of Pipeline
 type Pipeline struct {
-	ID               string      `json:"id"                  bson:"id"               mapstructure:"id"`
-	Type             string      `json:"type"                bson:"type"             mapstructure:"type"`
-	PipelineIDNumber string      `json:"pipelineIdNumber"    bson:"pipelineIdNumber" mapstructure:"pipelineIdNumber"`
-	ProjectID        ProjectID   `json:"projectId"           bson:"projectId"        mapstructure:"projectId"`
-	Name             string      `json:"name"                bson:"name"             mapstructure:"name"`
-	Triggers         []Trigger   `json:"triggers"            bson:"triggers"         mapstructure:"triggers"`
-	Stages           []Stage     `json:"stages"              bson:"stages"           mapstructure:"stages"`
-	Status           string      `json:"status"              bson:"status"           mapstructure:"status"`
-	StartTime        int64       `json:"startTime"           bson:"startTime"        mapstructure:"startTime"`
-	EndTime          int64       `json:"endTime"             bson:"endTime"          mapstructure:"endTime"`
-	LogUri           string      `json:"logUri"              bson:"logUri"           mapstructure:"logUri"`
-	Complete         bool        `json:"complete"            bson:"complete"         mapstructure:"complete"`
-	Force            bool        `json:"force"               bson:"-"                mapstructure:"-"`
-	FieldError       *FieldError `json:"fieldError"          bson:"fieldError"       mapstructure:"fieldError"`
-	Artifacts        bool        `json:"artifacts"           bson:"artifacts"        mapstructure:"artifacts"`
-	TriggerId        string      `json:"triggerId,omitempty" bson:"triggerId"        mapstructure:"triggerId"`
-	Commit           Commit      `json:"commit"              bson:"commit"           mapstructure:"commit"`
-	EventID          string      `json:"eventId"             bson:"eventId"          mapstructure:"eventId"`
+	// ID is the pipeline identifier
+	ID string `json:"id"                  bson:"id"               mapstructure:"id"`
+	// Type of the pipeline
+	Type string `json:"type"                bson:"type"             mapstructure:"type"`
+	// PipelineIDNumber is the number of this pipeline
+	PipelineIDNumber string `json:"pipelineIdNumber"    bson:"pipelineIdNumber" mapstructure:"pipelineIdNumber"`
+	// ProjectID is the project identifier for this pipeline
+	ProjectID ProjectID `json:"projectId"           bson:"projectId"        mapstructure:"projectId"`
+	// Name is the pipeline name
+	// +optional
+	Name string `json:"name"                bson:"name"             mapstructure:"name"`
+	// Triggers is when this pipeline will be triggered
+	Triggers []Trigger `json:"triggers"            bson:"triggers"         mapstructure:"triggers"`
+	// Stages is the stages within thi pipeline
+	Stages []Stage `json:"stages"              bson:"stages"           mapstructure:"stages"`
+	// Status of the pipeline during the execution
+	// +optional
+	Status string `json:"status"              bson:"status"           mapstructure:"status"`
+	// StartTime timestamp when this pipeline has started during the execution
+	// +optional
+	StartTime int64 `json:"startTime"           bson:"startTime"        mapstructure:"startTime"`
+	// EndTime timestamp when this pipeline has ended during the execution
+	// +optional
+	EndTime int64 `json:"endTime"             bson:"endTime"          mapstructure:"endTime"`
+	// LogUri url where to get the log of the pipeline execution
+	// +optional
+	LogUri string `json:"logUri"              bson:"logUri"           mapstructure:"logUri"`
+	// Complete a boolean to know if the pipeline configuration is complete
+	// +optional
+	Complete bool `json:"complete"            bson:"complete"         mapstructure:"complete"`
+	// Force a boolean to force pipeline recording
+	// +optional
+	Force bool `json:"force"               bson:"-"                mapstructure:"-"`
+	// FieldError list of error encountered into the pipeline configuration
+	// +optional
+	FieldError *FieldError `json:"fieldError"          bson:"-"                mapstructure:"-"`
+	// Artifacts a boolean set to true if the pipeline has generated artifacts during the execution
+	// +optional
+	Artifacts bool `json:"artifacts"           bson:"artifacts"        mapstructure:"artifacts"`
+	// TriggerId is the trigger id that trigger this pipeline
+	// +optional
+	TriggerId string `json:"triggerId,omitempty" bson:"triggerId"        mapstructure:"triggerId"`
+	// Commit is the commit that trigger this pipeline
+	// +optional
+	Commit Commit `json:"commit"              bson:"commit"           mapstructure:"commit"`
+	// EventID is the event id that trigger this pipeline
+	// +optional
+	EventID string `json:"eventId"             bson:"eventId"          mapstructure:"eventId"`
 }
 
 type Commit struct {
-	ID      string `json:"id"      bson:"id"      mapstructure:"id"`
-	Ref     string `json:"ref"     bson:"ref"     mapstructure:"ref"`
+	// ID the commit identifier
+	// +optional
+	ID string `json:"id"      bson:"id"      mapstructure:"id"`
+	// Ref the commit reference
+	// +optional
+	Ref string `json:"ref"     bson:"ref"     mapstructure:"ref"`
+	// Message the commit message
+	// +optional
 	Message string `json:"message" bson:"message" mapstructure:"message"`
 }
 
 type Field struct {
 	// Message holds the main diagnostic message carried by this Field
+	// +optional
 	Message string `json:"message" bson:"message" mapstructure:"message"`
 
 	// ID of the resource where the error is
+	// +optional
 	ID string `json:"id" bson:"id" mapstructure:"id"`
 
 	// Path of the resource
+	// +optional
 	Path string `json:"path" bson:"path" mapstructure:"path"`
 }
 
 type FieldError struct {
+	// Fields is a list of field where the issue is
+	// +optional
 	Fields []Field `json:"fields" bson:"fields" mapstructure:"fields"`
 }
