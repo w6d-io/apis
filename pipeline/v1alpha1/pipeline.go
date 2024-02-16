@@ -163,53 +163,53 @@ func (in ProjectID) String() string {
 // Pipeline defines the desired state of Pipeline
 type Pipeline struct {
 	// ID is the pipeline identifier
-	ID string `json:"id"                  bson:"id"               mapstructure:"id"`
+	ID string `json:"id"                             bson:"id"               mapstructure:"id"`
 	// Type of the pipeline
-	Type string `json:"type"                bson:"type"             mapstructure:"type"`
+	Type string `json:"type"                         bson:"type"             mapstructure:"type"`
 	// PipelineIDNumber is the number of this pipeline
-	PipelineIDNumber string `json:"pipelineIdNumber"    bson:"pipelineIdNumber" mapstructure:"pipelineIdNumber"`
+	PipelineIDNumber string `json:"pipelineIdNumber" bson:"pipelineIdNumber" mapstructure:"pipelineIdNumber"`
 	// ProjectID is the project identifier for this pipeline
-	ProjectID ProjectID `json:"projectId"           bson:"projectId"        mapstructure:"projectId"`
+	ProjectID ProjectID `json:"projectId"            bson:"projectId"        mapstructure:"projectId"`
 	// Name is the pipeline name
 	// +optional
-	Name string `json:"name"                bson:"name"             mapstructure:"name"`
+	Name string `json:"name"                         bson:"name"             mapstructure:"name"`
 	// Triggers is when this pipeline will be triggered
-	Triggers []Trigger `json:"triggers"            bson:"triggers"         mapstructure:"triggers"`
+	Triggers []Trigger `json:"triggers"              bson:"triggers"         mapstructure:"triggers"`
 	// Stages is the stages within thi pipeline
-	Stages []Stage `json:"stages"              bson:"stages"           mapstructure:"stages"`
+	Stages []Stage `json:"stages"                    bson:"stages"           mapstructure:"stages"`
 	// Status of the pipeline during the execution
 	// +optional
-	Status string `json:"status"              bson:"status"           mapstructure:"status"`
+	Status string `json:"status"                     bson:"status"           mapstructure:"status"`
 	// StartTime timestamp when this pipeline has started during the execution
 	// +optional
-	StartTime int64 `json:"startTime"           bson:"startTime"        mapstructure:"startTime"`
+	StartTime int64 `json:"startTime"                bson:"startTime"        mapstructure:"startTime"`
 	// EndTime timestamp when this pipeline has ended during the execution
 	// +optional
-	EndTime int64 `json:"endTime"             bson:"endTime"          mapstructure:"endTime"`
+	EndTime int64 `json:"endTime"                    bson:"endTime"          mapstructure:"endTime"`
 	// LogUri url where to get the log of the pipeline execution
 	// +optional
-	LogUri string `json:"logUri"              bson:"logUri"           mapstructure:"logUri"`
+	LogUri string `json:"logUri"                     bson:"logUri"           mapstructure:"logUri"`
 	// Complete a boolean to know if the pipeline configuration is complete
 	// +optional
-	Complete bool `json:"complete"            bson:"complete"         mapstructure:"complete"`
+	Complete bool `json:"complete"                   bson:"complete"         mapstructure:"complete"`
 	// Force a boolean to force pipeline recording
 	// +optional
-	Force bool `json:"force"               bson:"-"                mapstructure:"-"`
+	Force bool `json:"force"                         bson:"-"                mapstructure:"-"`
 	// FieldError list of error encountered into the pipeline configuration
 	// +optional
-	FieldError *FieldError `json:"fieldError"          bson:"-"                mapstructure:"-"`
+	FieldError *FieldError `json:"fieldError"        bson:"fieldError"       mapstructure:"-"`
 	// Artifacts a boolean set to true if the pipeline has generated artifacts during the execution
 	// +optional
-	Artifacts bool `json:"artifacts"           bson:"artifacts"        mapstructure:"artifacts"`
+	Artifacts bool `json:"artifacts"                 bson:"artifacts"        mapstructure:"artifacts"`
 	// TriggerId is the trigger id that trigger this pipeline
 	// +optional
-	TriggerId string `json:"triggerId,omitempty" bson:"triggerId"        mapstructure:"triggerId"`
+	TriggerId string `json:"triggerId,omitempty"     bson:"triggerId"        mapstructure:"triggerId"`
 	// Commit is the commit that trigger this pipeline
 	// +optional
-	Commit Commit `json:"commit"              bson:"commit"           mapstructure:"commit"`
+	Commit Commit `json:"commit"                     bson:"commit"           mapstructure:"commit"`
 	// EventID is the event id that trigger this pipeline
 	// +optional
-	EventID string `json:"eventId"             bson:"eventId"          mapstructure:"eventId"`
+	EventID string `json:"eventId"                   bson:"eventId"          mapstructure:"eventId"`
 }
 
 type Commit struct {
